@@ -4,6 +4,8 @@ from django.utils.translation import gettext as _
 
 from core.models import User
 
+from core.models import Tag
+
 
 class UserAdmin(BaseUserAdmin):
     ordering = ('id',)
@@ -33,3 +35,5 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Tag)
+
