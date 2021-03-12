@@ -3,7 +3,7 @@ from rest_framework import mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from recipe.models import Ingredient, Tag
+from core.models import Ingredient, Tag
 from recipe import serializers
 
 

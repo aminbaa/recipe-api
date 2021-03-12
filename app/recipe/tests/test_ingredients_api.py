@@ -28,7 +28,10 @@ class PrivateIngredientsApiTests(TestCase):
 
     def setUp(self):
         self.client = APIClient()
-        user = get_user_model().objects.create_user('test@test.com', 'password123')
+        user = get_user_model().objects.create_user(
+            'test@test.com',
+            'password123'
+        )
         self.user = user
         self.client.force_authenticate(self.user)
 
@@ -46,13 +49,17 @@ class PrivateIngredientsApiTests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_ingredients_limited_to_user(self):
-        """Tests that only ingredients for the authenticated user are retrieved"""
+        """Tests that only ingredients for the
+        authenticated user are retrieved"""
 
         Ingredient.objects.create(user=self.user, name='Kale')
         Ingredient.objects.create(user=self.user, name='salt')
-        other_user = get_user_model().objects.create_user('other@test.com', 'password123')
+        other_user = get_user_model().objects.create_user(
+            'other@test.com', 'password123'
+        )
         Ingredient.objects.create(user=other_user, name='vinegar')
-        user_ingredients = Ingredient.objects.filter(user=self.user).order_by('-name')
+        user_ingredients = Ingredient.objects.filter(
+            user=self.user).order_by('-name')
         serializer = IngredientSerializer(user_ingredients, many=True)
 
         res = self.client.get(INGREDIENTS_URL)
@@ -73,7 +80,5 @@ class PrivateIngredientsApiTests(TestCase):
         """Test creating invalid ingredient fails"""
         payload = {'name': ''}
         res = self.client.post(INGREDIENTS_URL, payload)
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-
-
+        self.assertEqual(res.status_code,
+                         status.HTTP_400_BAD_REQUEST)
