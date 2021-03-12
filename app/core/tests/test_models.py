@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 
 from core.models import Tag
 
+from core.models import Ingredient
+
 
 def sample_user(email='test@test.com', name='test_name'):
     """Create and return a sample user"""
@@ -50,3 +52,9 @@ class ModelTests(TestCase):
 
         tag = Tag.objects.create(user=sample_user(), name='vegan')
         self.assertEqual(str(tag), tag.name)
+
+    def test_ingredients_str(self):
+        """Test the Ingredient object string representation"""
+        ingredient = Ingredient.objects.create(user=sample_user(), name='Cucumber')
+
+        self.assertEqual(str(ingredient), ingredient.name)
