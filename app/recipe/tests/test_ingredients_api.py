@@ -20,7 +20,8 @@ class PublicIngredientsApiTests(TestCase):
     def test_login_required(self):
         """Test that login is required to access the endpoint"""
         res = self.client.get(INGREDIENTS_URL)
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(res.status_code,
+                         status.HTTP_401_UNAUTHORIZED)
 
 
 class PrivateIngredientsApiTests(TestCase):
@@ -71,7 +72,8 @@ class PrivateIngredientsApiTests(TestCase):
         """Test create a new ingredient"""
         payload = {'name': 'salt'}
         res = self.client.post(INGREDIENTS_URL, payload)
-        exist = Ingredient.objects.filter(user=self.user, name=payload['name']).exists()
+        exist = Ingredient.objects.filter(user=self.user,
+                                          name=payload['name']).exists()
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertTrue(exist)
