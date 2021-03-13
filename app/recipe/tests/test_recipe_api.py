@@ -260,7 +260,9 @@ class RecipeImageUploadTests(TestCase):
         recipe3 = sample_recipe(user=self.user, title='Steak and mushrooms')
 
         res = self.client.get(RECIPES_URL,
-                              {'ingredients': f'{ingredient1.id},{ingredient2.id}'}
+                              {
+                                  'ingredients':
+                                      f'{ingredient1.id},{ingredient2.id}'}
                               )
         serializer1 = RecipeSerializer(recipe1)
         serializer2 = RecipeSerializer(recipe2)
